@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodify/src/screens/categoriesscreen.dart';
 import 'package:foodify/src/screens/categoryMealsScreen.dart';
 import 'package:foodify/src/screens/mealDetailsScreen.dart';
+import 'package:foodify/src/screens/settingsScreen.dart';
 import 'package:foodify/src/screens/tabsScreen.dart';
 
 class App extends StatelessWidget {
@@ -33,7 +34,8 @@ class App extends StatelessWidget {
       routes: {
         '/': (context) => TabsScreen(),
         CategoryMealsScreen.routeName: (context) => CategoryMealsScreen(),
-        MealDetailsScreen.routeName: (context) => MealDetailsScreen()
+        MealDetailsScreen.routeName: (context) => MealDetailsScreen(),
+        SettingsScreen.routeName: (context) => SettingsScreen(),
       },
     );
   }

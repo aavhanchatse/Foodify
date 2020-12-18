@@ -78,6 +78,7 @@ class MealDetailsScreen extends StatelessWidget {
                     ),
                     title: Text(
                       selectedMeal.steps[index],
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                   ),
                   Divider(),
