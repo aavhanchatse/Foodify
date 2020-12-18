@@ -1,42 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:foodify/src/dummyDate.dart';
+import 'package:foodify/src/model/meal.dart';
 import 'package:foodify/src/widgets/mealItem.dart';
 
-class CategoryMealsScreen extends StatelessWidget {
+class CategoryMealsScreen extends StatefulWidget {
   static const routeName = '/category-meals';
-  // final String categoryId;
-  // final String categoryTitle;
-
-  // CategoryMealsScreen(this.categoryId, this.categoryTitle);
 
   @override
-  Widget build(BuildContext context) {
+  _CategoryMealsScreenState createState() => _CategoryMealsScreenState();
+}
+
+class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
+  String categoryTitle;
+  List<Meal> displayedMeals;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
     final routeArgs =
         ModalRoute.of(context).settings.arguments as Map<String, String>;
 
-    final categoryTitle = routeArgs['title'];
+    categoryTitle = routeArgs['title'];
     final categoryId = routeArgs['id'];
 
-    final categoryMeals = DUMMY_MEALS
+    displayedMeals = DUMMY_MEALS
         .where(
           (meal) => meal.categories.contains(categoryId),
         )
         .toList();
+    super.didChangeDependencies();
+  }
 
+  void _removeMeal(String mealId) {
+    setState(() {
+      displayedMeals.removeWhere((element) => element.id == mealId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(categoryTitle),
       ),
       body: ListView.builder(
-        itemCount: categoryMeals.length,
+        itemCount: displayedMeals.length,
         itemBuilder: (context, index) {
           return MealItem(
-            id: categoryMeals[index].id,
-            affordability: categoryMeals[index].affordability,
-            complexity: categoryMeals[index].complexity,
-            duration: categoryMeals[index].duration,
-            imageUrl: categoryMeals[index].imageUrl,
-            title: categoryMeals[index].title,
+            id: displayedMeals[index].id,
+            affordability: displayedMeals[index].affordability,
+            complexity: displayedMeals[index].complexity,
+            duration: displayedMeals[index].duration,
+            imageUrl: displayedMeals[index].imageUrl,
+            title: displayedMeals[index].title,
+            removeItem: _removeMeal,
           );
         },
       ),
