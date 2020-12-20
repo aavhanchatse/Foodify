@@ -4,6 +4,11 @@ import 'package:foodify/src/dummyDate.dart';
 class MealDetailsScreen extends StatelessWidget {
   static const routeName = '/meal-details';
 
+  final Function toggleFav;
+  final Function isMealFav;
+
+  MealDetailsScreen(this.toggleFav, this.isMealFav);
+
   Widget buildSectionTitle(BuildContext context, String text) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
@@ -89,10 +94,8 @@ class MealDetailsScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
-        onPressed: () {
-          Navigator.of(context).pop(mealId);
-        },
+        child: Icon(isMealFav(mealId) ? Icons.star : Icons.star_border,),
+        onPressed: () => toggleFav(mealId),
       ),
     );
   }
